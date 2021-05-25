@@ -54,13 +54,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="InvertBooleanToVisibilityConverter.cs" />
-    <Compile Include="LanguagePropertyConverter.cs" />
     <Compile Include="Properties\Settings.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
-    <Compile Include="RegionPropertyConverter.cs" />
     <Page Include="DesignTimeResources.xaml" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>

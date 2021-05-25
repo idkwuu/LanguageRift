@@ -14,8 +14,6 @@
         ui:WindowHelper.UseModernWindowStyle="True">
 
     <Window.Resources>
-        <local:LanguagePropertyConverter x:Key="LanguagePropertyConverter" />
-        <local:RegionPropertyConverter x:Key="RegionPropertyConverter" />
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
         <local:InvertBooleanToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter"
                                                   VisibilityConverter="{StaticResource BooleanToVisibilityConverter}" />
