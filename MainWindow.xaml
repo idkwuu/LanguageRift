@@ -1,0 +1,115 @@
+﻿<Window x:Class="LoL_Language.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:LoL_Language"
+        mc:Ignorable="d"
+        Title="LoL-Language" Width="525"
+        xmlns:ui="http://schemas.modernwpf.com/2019"
+        xmlns:system="clr-namespace:System;assembly=mscorlib"
+        DataContext="{StaticResourceExtension ResourceKey=DataViewModel}"
+        ResizeMode="NoResize"
+        SizeToContent="Height"
+        ui:WindowHelper.UseModernWindowStyle="True">
+
+    <Window.Resources>
+        <local:LanguagePropertyConverter x:Key="LanguagePropertyConverter" />
+        <local:RegionPropertyConverter x:Key="RegionPropertyConverter" />
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
+        <local:InvertBooleanToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter"
+                                                  VisibilityConverter="{StaticResource BooleanToVisibilityConverter}" />
+        
+        <x:Array Type="system:String" x:Key="Regions">
+            <system:String>NA</system:String>
+            <system:String>LA1</system:String>
+            <system:String>LA2</system:String>
+            <system:String>EUW</system:String>
+            <system:String>EUNE</system:String>
+            <system:String>BR</system:String>
+            <system:String>JP</system:String>
+            <system:String>OC1</system:String>
+            <system:String>RU</system:String>
+            <system:String>TR</system:String>
+        </x:Array>
+        
+        <x:Array Type="system:String" x:Key="Languages">
+            <system:String>es_MX</system:String>
+            <system:String>es_ES</system:String>
+            <system:String>ja_JP</system:String>
+            <system:String>en_US</system:String>
+            <system:String>en_GB</system:String>
+            <system:String>en_AU</system:String>
+            <system:String>ko_KR</system:String>
+            <system:String>fr_FR</system:String>
+            <system:String>zh_CN</system:String>
+            <system:String>zh_TW</system:String>
+            <system:String>de_DE</system:String>
+            <system:String>it_IT</system:String>
+            <system:String>pl_PL</system:String>
+            <system:String>ro_RO</system:String>
+            <system:String>el_GR</system:String>
+            <system:String>pt_BR</system:String>
+            <system:String>hu_HU</system:String>
+            <system:String>ru_RU</system:String>
+            <system:String>tr_TR</system:String>
+        </x:Array>
+    </Window.Resources>
+
+    <Grid Margin="16">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="League of Legends folder:" VerticalAlignment="Center" />
+            <TextBox Grid.Column="1" Margin="8,0,0,0" Text="{Binding LolFolder}" IsEnabled="False" />
+            <Button x:Name="OpenFolder" Grid.Column="2" FontFamily="Segoe MDL2 Assets" Content="&#xE838;"
+                    Margin="8,0,0,0" />
+        </Grid>
+
+        <Grid Row="1" Margin="0,16, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Language:" VerticalAlignment="Center" />
+            <ComboBox x:Name="LanguageComboBox" Grid.Column="1" Margin="8,0,0,0" ItemsSource="{StaticResource Languages}" SelectedIndex="{Binding SelectedLanguageIndex}"/>
+        </Grid>
+
+        <Grid Row="2" Margin="0,16, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Region:" VerticalAlignment="Center" />
+            <ComboBox x:Name="RegionComboBox" Grid.Column="1" Margin="8,0,0,0" ItemsSource="{StaticResource Regions}" SelectedIndex="{Binding SelectedRegionIndex}"/>
+        </Grid>
+
+        <Grid Row="3" Margin="0,16,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal" >
+                <Button Content="Licenses" HorizontalAlignment="Left" x:Name="Licenses" />
+                <Button Content="GitHub" HorizontalAlignment="Left" x:Name="GitHub" Margin="8,0,0,0"/>
+                <TextBlock Text="v1.0" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0"/>
+            </StackPanel>
+            <Button Grid.Column="1" Content="Launch" HorizontalAlignment="Right" x:Name="Launch"
+                    IsEnabled="{Binding IsValidLolFolder}" />
+        </Grid>
+    </Grid>
+</Window>
