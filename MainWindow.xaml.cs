@@ -26,9 +26,11 @@ namespace LoL_Language
             InitializeComponent();
             DataContext = _dvm;
             // Do things...
-            LoL_LookUpFolder();
-            LoL_ReadConfigs();
-            LoL_GetCurrentLanguageAndRegion();
+            var isValidFolder = LoL_LookUpFolder();
+            if (isValidFolder) {
+                LoL_ReadConfigs();
+                LoL_GetCurrentLanguageAndRegion();
+            }
             // Link buttons to functions
             OpenFolder.Click += OpenFolderPicker;
             Launch.Click += LoL_Launch;
@@ -113,6 +115,8 @@ namespace LoL_Language
                 }
                 _dvm.LolFolder = folder;
                 _dvm.IsValidLolFolder = true;
+                LoL_ReadConfigs();
+                LoL_GetCurrentLanguageAndRegion();
                 return true;
 
             }

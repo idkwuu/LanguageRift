@@ -60,6 +60,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <Grid Row="0">
@@ -74,16 +75,9 @@
             <Button x:Name="OpenFolder" Grid.Column="2" FontFamily="Segoe MDL2 Assets" Content="&#xE838;"
                     Margin="8,0,0,0" />
         </Grid>
-
-        <Grid Row="1" Margin="0,16, 0, 0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-            </Grid.ColumnDefinitions>
-
-            <TextBlock Text="Language:" VerticalAlignment="Center" />
-            <ComboBox x:Name="LanguageComboBox" Grid.Column="1" Margin="8,0,0,0" ItemsSource="{StaticResource Languages}" SelectedIndex="{Binding SelectedLanguageIndex}"/>
-        </Grid>
+        
+        <TextBlock Grid.Row="1" Text="This folder doesn't contain the League of Legends client!" Margin="0,16,0,0"
+                   Visibility="{Binding IsValidLolFolder, Converter={StaticResource InvertBooleanToVisibilityConverter}}"/>
 
         <Grid Row="2" Margin="0,16, 0, 0">
             <Grid.ColumnDefinitions>
@@ -91,11 +85,23 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Region:" VerticalAlignment="Center" />
-            <ComboBox x:Name="RegionComboBox" Grid.Column="1" Margin="8,0,0,0" ItemsSource="{StaticResource Regions}" SelectedIndex="{Binding SelectedRegionIndex}"/>
+            <TextBlock Text="Language:" VerticalAlignment="Center" />
+            <ComboBox x:Name="LanguageComboBox" Grid.Column="1" Margin="8,0,0,0" ItemsSource="{StaticResource Languages}" SelectedIndex="{Binding SelectedLanguageIndex}"
+                      IsEnabled="{Binding IsValidLolFolder}"/>
         </Grid>
 
-        <Grid Row="3" Margin="0,16,0,0">
+        <Grid Row="3" Margin="0,16, 0, 0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Text="Region:" VerticalAlignment="Center" />
+            <ComboBox x:Name="RegionComboBox" Grid.Column="1" Margin="8,0,0,0" ItemsSource="{StaticResource Regions}" SelectedIndex="{Binding SelectedRegionIndex}"
+                      IsEnabled="{Binding IsValidLolFolder}"/>
+        </Grid>
+
+        <Grid Row="4" Margin="0,16,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
                 <ColumnDefinition />
@@ -104,7 +110,7 @@
             <StackPanel Orientation="Horizontal" >
                 <Button Content="Licenses" HorizontalAlignment="Left" x:Name="Licenses" />
                 <Button Content="GitHub" HorizontalAlignment="Left" x:Name="GitHub" Margin="8,0,0,0"/>
-                <TextBlock Text="v1.0" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                <TextBlock Text="v1.0.0.1" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </StackPanel>
             <Button Grid.Column="1" Content="Launch" HorizontalAlignment="Right" x:Name="Launch"
                     IsEnabled="{Binding IsValidLolFolder}" />
