@@ -6,6 +6,8 @@
 
 A tool to quickly change the language of League of Legends
 
+![LanguageRift Screenshot](https://raw.githubusercontent.com/idkwuu/LanguageRift/main/art/screenshot.png)
+
 ### Why?
 
 Here's my case: I primarily play League in the Latinamerican North server, but I like to play the game in English. The problem is that the only language I can set Spanish. I tried to launch the client with the `--locale en_US` flag, but didnt work, tried to edit `Config/LeagueClientSettings.yaml`, nothing, and tried to edit `system.yaml`, nothing either.
