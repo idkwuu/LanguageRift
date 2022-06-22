@@ -1,23 +1,24 @@
-﻿<Window x:Class="LoL_Language.MainWindow"
+﻿<Window x:Class="LanguageRift.Views.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:LoL_Language"
-        mc:Ignorable="d"
-        Title="LoL-Language" Width="525"
+        xmlns:system="clr-namespace:System;assembly=mscorlib" 
+        xmlns:data="clr-namespace:LanguageRift.Data"
         xmlns:ui="http://schemas.modernwpf.com/2019"
-        xmlns:system="clr-namespace:System;assembly=mscorlib"
-        DataContext="{StaticResourceExtension ResourceKey=DataViewModel}"
-        ResizeMode="NoResize"
+        mc:Ignorable="d"
+        Title="LanguageRift"
+        Width="600"
+        ResizeMode="CanMinimize"
         SizeToContent="Height"
-        ui:WindowHelper.UseModernWindowStyle="True">
+        DataContext="{StaticResourceExtension LanguageViewModel}"
+        ui:WindowHelper.UseModernWindowStyle="True"
+        Icon="/Resources/Icon.ico">
 
     <Window.Resources>
-        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter" />
-        <local:InvertBooleanToVisibilityConverter x:Key="InvertBooleanToVisibilityConverter"
-                                                  VisibilityConverter="{StaticResource BooleanToVisibilityConverter}" />
-        
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+        <data:InvertedBooleanToVisibilityConverter x:Key="InvertedBooleanToVisibilityConverter" />
+
         <x:Array Type="system:String" x:Key="Regions">
             <system:String>NA</system:String>
             <system:String>LA1</system:String>
@@ -30,7 +31,7 @@
             <system:String>RU</system:String>
             <system:String>TR</system:String>
         </x:Array>
-        
+
         <x:Array Type="system:String" x:Key="Languages">
             <system:String>es_MX</system:String>
             <system:String>es_ES</system:String>
@@ -53,8 +54,8 @@
             <system:String>tr_TR</system:String>
         </x:Array>
     </Window.Resources>
-
-    <Grid Margin="16">
+    
+    <Grid Margin="16, 8, 16, 16">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -63,21 +64,34 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid Row="0">
+        <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="League of Legends folder:" VerticalAlignment="Center" />
-            <TextBox Grid.Column="1" Margin="8,0,0,0" Text="{Binding LolFolder}" IsEnabled="False" />
-            <Button x:Name="OpenFolder" Grid.Column="2" FontFamily="Segoe MDL2 Assets" Content="&#xE838;"
+            <TextBlock 
+                    Text="'League of Legends' folder:" 
+                    VerticalAlignment="Center" />
+
+            <TextBox 
+                    Grid.Column="1" 
+                    Margin="8,0,0,0" 
+                    Text="{Binding GameFolder}" 
+                    IsEnabled="False" />
+            <Button
+                    Grid.Column="2"
+                    x:Name="OpenFolder"
+                    FontFamily="Segoe MDL2 Assets" Content="&#xE838;"
                     Margin="8,0,0,0" />
         </Grid>
-        
-        <TextBlock Grid.Row="1" Text="This folder doesn't contain the League of Legends client!" Margin="0,16,0,0"
-                   Visibility="{Binding IsValidLolFolder, Converter={StaticResource InvertBooleanToVisibilityConverter}}"/>
+
+        <TextBlock 
+                Grid.Row="1" 
+                Text="This folder doesn't contain the League of Legends client!" 
+                Margin="0,16,0,0"
+                Visibility="{Binding IsGameFolderValid, Converter={StaticResource InvertedBooleanToVisibilityConverter}}"/>
 
         <Grid Row="2" Margin="0,16, 0, 0">
             <Grid.ColumnDefinitions>
@@ -85,9 +99,16 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Language:" VerticalAlignment="Center" />
-            <ComboBox x:Name="LanguageComboBox" Grid.Column="1" Margin="8,0,0,0" ItemsSource="{StaticResource Languages}" SelectedIndex="{Binding SelectedLanguageIndex}"
-                      IsEnabled="{Binding IsValidLolFolder}"/>
+            <TextBlock
+                    Text="Language:" 
+                    VerticalAlignment="Center" />
+            <ComboBox 
+                    Grid.Column="1"
+                    x:Name="LanguageComboBox" 
+                    Margin="8,0,0,0" 
+                    ItemsSource="{StaticResource Languages}" 
+                    SelectedValue="{Binding Language}"
+                    IsEnabled="{Binding IsGameFolderValid}"/>
         </Grid>
 
         <Grid Row="3" Margin="0,16, 0, 0">
@@ -96,9 +117,16 @@
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock Text="Region:" VerticalAlignment="Center" />
-            <ComboBox x:Name="RegionComboBox" Grid.Column="1" Margin="8,0,0,0" ItemsSource="{StaticResource Regions}" SelectedIndex="{Binding SelectedRegionIndex}"
-                      IsEnabled="{Binding IsValidLolFolder}"/>
+            <TextBlock 
+                    Text="Region:" 
+                    VerticalAlignment="Center" />
+            <ComboBox
+                    Grid.Column="1"
+                    x:Name="RegionComboBox" 
+                    Margin="8,0,0,0"
+                    SelectedValue="{Binding Region}"
+                    ItemsSource="{StaticResource Regions}"
+                    IsEnabled="{Binding IsGameFolderValid}"/>
         </Grid>
 
         <Grid Row="4" Margin="0,16,0,0">
@@ -110,10 +138,14 @@
             <StackPanel Orientation="Horizontal" >
                 <Button Content="Licenses" HorizontalAlignment="Left" x:Name="Licenses" />
                 <Button Content="GitHub" HorizontalAlignment="Left" x:Name="GitHub" Margin="8,0,0,0"/>
-                <TextBlock Text="v1.0.0.1" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0"/>
+                <TextBlock Text="{Binding Version}" IsEnabled="False" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="8,0,0,0"/>
             </StackPanel>
-            <Button Grid.Column="1" Content="Launch" HorizontalAlignment="Right" x:Name="Launch"
-                    IsEnabled="{Binding IsValidLolFolder}" />
+            <Button 
+                Grid.Column="1" 
+                Content="Launch" 
+                HorizontalAlignment="Right" 
+                x:Name="Launch"
+                IsEnabled="{Binding IsGameFolderValid}" />
         </Grid>
     </Grid>
 </Window>
